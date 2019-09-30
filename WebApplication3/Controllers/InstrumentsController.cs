@@ -11,7 +11,7 @@ using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
-    public class InstrumentsController : Controller
+    public class InstrumentsController : FormatController
     {
         private readonly SchoolContext _context;
 
@@ -65,6 +65,7 @@ namespace WebApplication3.Controllers
         }
 
         // GET: Instruments/Details/5
+        [Route("[controller]/[action]/{id}.{format?}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -81,7 +82,7 @@ namespace WebApplication3.Controllers
                 return NotFound();
             }
 
-            return View(instrument);
+            return FormatOrView(instrument);
         }
 
         // GET: Instruments/Create
@@ -95,6 +96,7 @@ namespace WebApplication3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("[controller]/[action]/{id}.{format?}")]
         public async Task<IActionResult> Create([Bind("ID,Name,Country,Price")] Instrument instrument)
         {
             if (ModelState.IsValid)
@@ -103,10 +105,11 @@ namespace WebApplication3.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(instrument);
+            return FormatOrView(instrument);
         }
 
         // GET: Instruments/Edit/5
+        [Route("[controller]/[action]/{id}.{format?}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -119,7 +122,7 @@ namespace WebApplication3.Controllers
             {
                 return NotFound();
             }
-            return View(instrument);
+            return FormatOrView(instrument);
         }
 
         // POST: Instruments/Edit/5
@@ -127,6 +130,7 @@ namespace WebApplication3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("[controller]/[action]/{id}.{format?}")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Country,Price")] Instrument instrument)
         {
             if (id != instrument.ID)
@@ -154,7 +158,7 @@ namespace WebApplication3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(instrument);
+            return FormatOrView(instrument);
         }
 
         // GET: Instruments/Delete/5

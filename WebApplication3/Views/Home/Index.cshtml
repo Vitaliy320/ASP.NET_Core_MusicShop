@@ -2,9 +2,21 @@
     ViewData["Title"] = "Home Page";
 }
 
+    <div id='map' style='width: 400px; height: 300px;'></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoidml0YWxpeTMyMCIsImEiOiJjazE1ODIyNGUwcTdtM290Z2dpcmpkcTlsIn0.KoqRn6jzk25pQY34ZadnKw';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11'
+        });
+    </script>
+
+}
+
 <div class="jumbotron">
     <h1>Contoso University</h1>
 </div>
+
 <div class="row">
     <div class="col-md-4">
         <h2>Welcome to Contoso University</h2>

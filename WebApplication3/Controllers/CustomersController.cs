@@ -11,7 +11,7 @@ using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
-    public class CustomersController : Controller
+    public class CustomersController : FormatController
     {
         private readonly SchoolContext _context;
 
@@ -72,6 +72,7 @@ namespace WebApplication3.Controllers
         }
 
         // GET: Customers/Details/5
+        [Route("[controller]/[action]/{id}.{format?}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -86,7 +87,7 @@ namespace WebApplication3.Controllers
                 return NotFound();
             }
 
-            return View(customer);
+            return FormatOrView(customer);
         }
 
         // GET: Customers/Create
@@ -100,6 +101,7 @@ namespace WebApplication3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("[controller]/[action]/{id}.{format?}")]
         public async Task<IActionResult> Create([Bind("ID,Name,Surname,PurchaseDate")] Customer customer)
         {
             if (ModelState.IsValid)
@@ -108,10 +110,11 @@ namespace WebApplication3.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return FormatOrView(customer);
         }
 
         // GET: Customers/Edit/5
+        [Route("[controller]/[action]/{id}.{format?}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -124,7 +127,7 @@ namespace WebApplication3.Controllers
             {
                 return NotFound();
             }
-            return View(customer);
+            return FormatOrView(customer);
         }
 
         // POST: Customers/Edit/5
@@ -132,6 +135,7 @@ namespace WebApplication3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("[controller]/[action]/{id}.{format?}")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Surname,PurchaseDate")] Customer customer)
         {
             if (id != customer.ID)
@@ -159,7 +163,7 @@ namespace WebApplication3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return FormatOrView(customer);
         }
 
         // GET: Customers/Delete/5

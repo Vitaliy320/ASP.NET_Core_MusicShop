@@ -10,7 +10,7 @@ using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
-    public class PurchasesController : Controller
+    public class PurchasesController : FormatController
     {
         private readonly SchoolContext _context;
 
@@ -27,6 +27,7 @@ namespace WebApplication3.Controllers
         }
 
         // GET: Purchases/Details/5
+        [Route("[controller]/[action]/{id}.{format?}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,7 +44,7 @@ namespace WebApplication3.Controllers
                 return NotFound();
             }
 
-            return View(purchase);
+            return FormatOrView(purchase);
         }
 
         // GET: Purchases/Create
@@ -59,6 +60,7 @@ namespace WebApplication3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("[controller]/[action]/{id}.{format?}")]
         public async Task<IActionResult> Create([Bind("ID,CustomerID,InstrumentID")] Purchase purchase)
         {
             if (ModelState.IsValid)
@@ -69,10 +71,11 @@ namespace WebApplication3.Controllers
             }
             ViewData["CustomerID"] = new SelectList(_context.Set<Customer>(), "ID", "ID", purchase.CustomerID);
             ViewData["InstrumentID"] = new SelectList(_context.Instrument, "ID", "ID", purchase.InstrumentID);
-            return View(purchase);
+            return FormatOrView(purchase);
         }
 
         // GET: Purchases/Edit/5
+        [Route("[controller]/[action]/{id}.{format?}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,7 +90,7 @@ namespace WebApplication3.Controllers
             }
             ViewData["CustomerID"] = new SelectList(_context.Set<Customer>(), "ID", "ID", purchase.CustomerID);
             ViewData["InstrumentID"] = new SelectList(_context.Instrument, "ID", "ID", purchase.InstrumentID);
-            return View(purchase);
+            return FormatOrView(purchase);
         }
 
         // POST: Purchases/Edit/5
@@ -95,6 +98,7 @@ namespace WebApplication3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("[controller]/[action]/{id}.{format?}")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,CustomerID,InstrumentID")] Purchase purchase)
         {
             if (id != purchase.ID)
@@ -124,7 +128,7 @@ namespace WebApplication3.Controllers
             }
             ViewData["CustomerID"] = new SelectList(_context.Set<Customer>(), "ID", "ID", purchase.CustomerID);
             ViewData["InstrumentID"] = new SelectList(_context.Instrument, "ID", "ID", purchase.InstrumentID);
-            return View(purchase);
+            return FormatOrView(purchase);
         }
 
         // GET: Purchases/Delete/5
